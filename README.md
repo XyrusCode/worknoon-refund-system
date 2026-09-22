@@ -201,13 +201,14 @@ A critical requirement for autonomous AI agents in e-commerce is preventing adve
 
 ## Video Demo Walkthrough
 
-A video demonstration covering:
-1. Local execution via Docker Compose.
-2. Submitting refund requests across different policy edge cases (approved damaged goods, denied final sale, escalated high-value order).
-3. The Admin audit dashboard displaying AI reasoning and policy violation logs.
-4. Architectural walkthrough.
+A complete end-to-end video demonstration has been captured using Playwright:
+1. **Landing Page & Navigation**: Overview of system architecture and portal links.
+2. **Customer Portal Refund Flow (`/request`)**: Customer selection, order inspection, natural language issue entry, real-time Gemini AI evaluation, and structured confidence/reasoning breakdown.
+3. **Admin Portal (`/admin`)**: Status metrics cards, live status filter tabs, instant search filtering, and row expansion with detailed audit trails and item breakdowns.
+4. **Theme & Responsiveness**: Theme toggling and seamless responsive layout.
 
-👉 **Demo Video Link:** *(Add video link here prior to submission)*
+- **Video File (HD .webm):** [`recordings/worknoon-refund-flows.webm`](./recordings/worknoon-refund-flows.webm)
+- **Automated Recording Script:** Run `node scripts/record-demo.mjs` anytime to re-record the full flow suite automatically.
 
 ---
 

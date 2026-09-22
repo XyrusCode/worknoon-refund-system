@@ -42,3 +42,6 @@ Thumbs.db
 graphify-out/
 .cache/
 conversation-history/
+.agents/
+skills-lock.json
+
