@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+.output/
+.vinxi/
+.next/
+coverage/
+
+# Environment variables & secrets
+.env
+.env.*
+!.env.example
+
+# Vercel & cloud metadata
+.vercel/
+
+# Logs & scratch
+*.log
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDE & system
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Graphify / AI tool caches
+graphify-out/
+.cache/
+conversation-history/
