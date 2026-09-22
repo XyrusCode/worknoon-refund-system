@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: worknoon-refund-db
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-worknoon_refund}
+      POSTGRES_USER: ${POSTGRES_USER:-worknoon}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-worknoon_dev}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-worknoon} -d ${POSTGRES_DB:-worknoon_refund}']
+      interval: 3s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: worknoon-refund-backend
+    restart: unless-stopped
+    ports:
+      - '3001:3001'
+    environment:
+      - DATABASE_URL=${DATABASE_URL:-postgresql://worknoon:worknoon_dev@db:5432/worknoon_refund?sslmode=disable}
+      - GOOGLE_GENERATIVE_AI_API_KEY=${GOOGLE_GENERATIVE_AI_API_KEY}
+      - PORT=3001
+      - FRONTEND_URL=http://localhost:3000
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL:-http://localhost:3001/api}
+    container_name: worknoon-refund-frontend
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      - VITE_API_URL=${VITE_API_URL:-http://localhost:3001/api}
+      - PORT=3000
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
