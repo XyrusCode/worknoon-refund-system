@@ -3,7 +3,7 @@
 # Multi-stage production build for TanStack Start + Tailwind + Nitro
 # ==============================================================================
 
-FROM node:22-alpine AS base
+FROM node:22-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable && corepack prepare pnpm@10.28.0 --activate
@@ -15,7 +15,8 @@ FROM base AS deps
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+# Do not force frozen lockfile so platform-specific native bindings (Linux glibc) are installed
+RUN pnpm install
 
 # ------------------------------------------------------------------------------
 # 2. Build Stage
